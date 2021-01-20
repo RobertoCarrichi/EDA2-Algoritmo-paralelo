@@ -13,7 +13,8 @@ public class VersionParalela {
         /*
 			Se indica el archivo a cifrar o descifrar.
         */
-		File file = new File("385900.txt"); 
+
+		File file = new File("100000.txt");
 
 		/*
 			Se debe indicar si quiere cifrarse el archivo o descifrarse.
@@ -31,7 +32,7 @@ public class VersionParalela {
         /*
 			Numero de hilos
         */
-		int hilos = 20;
+		int hilos = 60;
 
 		/*
 			Se debe verificar si el archivo existe para que el proceso pueda continuar.

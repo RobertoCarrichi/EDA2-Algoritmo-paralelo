@@ -11,7 +11,6 @@ import java.io.PrintWriter;
  * 
  */
 public class Cifrado {
-
 	File archivo;
 	int desplazamiento;
 	int hilos;
