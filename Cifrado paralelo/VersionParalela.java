@@ -1,13 +1,12 @@
 import java.io.File;
-import java.lang.InterruptedException;
 
+/*
+ * Clase inicial encarga de ejecutar cualquier proceso en el archivo.
+ */
 public class VersionParalela {
-	public static void main(String[] args) throws InterruptedException{
-
-
-
+	public static void main(String[] args){
         /*
-			Se indica el archivo a cifrar.
+			Se indica el archivo a cifrar o descifrar.
         */
 		File file = new File("test.txt"); 
 
@@ -18,55 +17,50 @@ public class VersionParalela {
 				1 -> Para DESCIFRAR
 		*/
 		int modo = 1;
-        
+
+		/*
+			Se debe indicar la cantidad de veces a desplazar el abecedario.
+		*/
+        int desplazamiento = 3;
+
+
 		/*
 			Se debe verificar si el archivo existe para que el proceso pueda continuar.
 		*/
 		if (file.exists()) {
 			/*
-				#######################################
-				#	COMIENZA EL PROCESO DE CIFRADO    #
-				#######################################
-
-
-				LEER ARCHIVO
-				DIVIDIR POR LA MITAD
-					IMPRIMIR MITADES EN AUXILIARES
-				CADA UNO DE LOS HILOS DEBE 
-					LEER SU RESPECTIVO AUXILIAR
-					CIFRARLO
-					IMPRIMIRLO EN EL MISMO AUXILIAR
-
-				HASTA QUE HAYAN TERMINADO AMBOS ARCHIVOS DE CIFRAR E IMPRIMIR
-				REPETIR PARA CADA HILO
-					LEER UN AUXILIAR, IMPRIMIRLO EN EL ARCHIVO FINAL 
-				TERMINA	
+				Se genera la clase encargada de aplicar cualquier proceso en el archivo.
 			*/
-	         
+			Cifrado cifrado = new Cifrado(file);
+
 			/*
-				SE LEE EL ARCHIVO A CIFRAR.
+				Son definidos los tiempos iniciales de ejecución.
 			*/
 		    long inicio = 0;
 		    long fin = 0;
 
-		    if (modo == 0) {
+		    if ( (modo == 0) && (file.length() != 0) ) {
 				System.out.println("\n\tComienza el cifrado!");
 		    	inicio = System.currentTimeMillis();
-		    	
+		    	cifrado.cifrar();
 	        	fin = System.currentTimeMillis();
 				System.out.println("\tTermina el cifrado!");
-		    }else if (modo == 1) {
+		    }else if ((modo == 1)  && (file.length() != 0) ) {
 				System.out.println("\n\tComienza el descifrado!");
 		    	inicio = System.currentTimeMillis();
-
+		    	cifrado.descifrar();
 	        	fin = System.currentTimeMillis();
 				System.out.println("\tTermina el descifrado!");
 		    }else{
-		    	System.out.println("OH NO! Ha ocurrido un error con el modo de operacion.");
+		    	if (file.length() == 0) {
+					System.out.println("El archivo que se encuentra vacio.");		    		
+		    	} else {
+		    		System.out.println("OH NO! Ha ocurrido un error con el modo de operacion.");
+		    	}
 		    }
 
 		    if (inicio != 0) {
-		        double tiempo = (double) ((fin - inicio)/1000);
+		        double tiempo = (fin - inicio) / 1000;
 		        System.out.println("\n\tEl proceso a tardado "+tiempo +" segundos.");
 		    }
         }else {

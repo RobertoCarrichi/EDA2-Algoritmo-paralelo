@@ -1,7 +1,26 @@
+import java.io.File;
+
 /* 
  * 
  */
 public class Cifrado {
+
+	File archivo;
+	int desplazamiento;
+	
+	/*
+	 *
+	 *
+	 *	
+	 */
+	public Cifrado (File archivo, int desplazamiento) {
+		/*
+			SE LEE EL ARCHIVO A CIFRAR.
+		*/
+		this.archivo = archivo;
+		this.desplazamiento = desplazamiento;
+		
+	}
 
 	/*
 	 * Este es el método que manejará el proceso indicado para leer el contenido de un archivo,
@@ -9,51 +28,50 @@ public class Cifrado {
 	 * se busca unir el contenido de ambos archivos en un archivo final.
 	 *
 	 */
-	public static String cifrar(String cadenaOriginal) {
-		return rotar(cadenaOriginal, 3);
+	public static void cifrar() {
+		/*
+			#######################################
+			#	COMIENZA EL PROCESO DE CIFRADO    #
+			#######################################
+		*/
+
+		/*
+			SE DIVIDE EL ARCHIVO.
+				IMPRIMIR MITADES EN AUXILIARES
+		*/
+
+		/*
+			COMIENZA EL PROCESO DE EJECUCIÓN PARA CADA UNO DE LOS HILOS
+
+			CADA UNO DE LOS HILOS DEBE 
+				LEER SU RESPECTIVO AUXILIAR
+				CIFRARLO
+				IMPRIMIRLO EN EL MISMO AUXILIAR
+		*/
+
+		/*
+			SE REPORTAN LOS RESULTADOS. SOLO DESPUÉS DE QUE AMBOS HILOS HAN TERMINADO.
+
+			HASTA QUE HAYAN TERMINADO AMBOS ARCHIVOS DE CIFRAR E IMPRIMIR
+			REPETIR PARA CADA HILO
+				LEER UN AUXILIAR, IMPRIMIRLO EN EL ARCHIVO FINAL 
+			TERMINA	
+		*/
+
+
+		// return rotar(archivo, 3);
 	}
 
 	/*
 	 * Este método realizará el proceso inverso para volver al contenido del archivo original.
 	 * Leyendo el resultado de ambos archivos auxiliares, descifrar el contenido en hilos diferentes
-	 * e imprimirlo 
+	 * e imprimirlo.
 	 *
 	 */
-	public static String descifrar(String cadenaCifrada) {
-		return rotar(cadenaCifrada, -3);
-	}
-
-	public static String rotar(String cadenaOriginal, int rotaciones) {
-		// En ASCII, la a es 97, b 98, A 65, B 66, etcétera
-		final int LONGITUD_ALFABETO = 26, INICIO_MINUSCULAS = 97, INICIO_MAYUSCULAS = 65;
-		String cadenaRotada = ""; // La cadena nueva, la que estará rotada
-		for (int x = 0; x < cadenaOriginal.length(); x++) {
-			char caracterActual = cadenaOriginal.charAt(x);
-			// Si no es una letra del alfabeto entonces ponemos el char tal y como está
-			// y pasamos a la siguiente iteración
-			if (!Character.isLetter(caracterActual)) {
-				cadenaRotada += caracterActual;
-				continue;
-			}
-
-			int codigoAsciiDeCaracterActual = (int) caracterActual;
-			boolean esMayuscula = Character.isUpperCase(caracterActual);
-
-			// La posición (1 a 26) que ocupará la letra después de ser rotada
-			// El % LONGITUD_ALFABETO se utiliza por si se pasa de 26. Por ejemplo,
-			// la "z", al ser rotada una vez da el valor de 27, pero en realidad debería
-			// regresar a la letra "a", y con mod hacemos eso ya que 27 % 26 == 1,
-			// 28 % 26 == 2, etcétera ;)
-			int nuevaPosicionEnAlfabeto = ((codigoAsciiDeCaracterActual
-					- (esMayuscula ? INICIO_MAYUSCULAS : INICIO_MINUSCULAS)) + rotaciones) % LONGITUD_ALFABETO;
-			// Arreglar rotaciones negativas
-			if (nuevaPosicionEnAlfabeto < 0)
-				nuevaPosicionEnAlfabeto += LONGITUD_ALFABETO;
-			int nuevaPosicionAscii = (esMayuscula ? INICIO_MAYUSCULAS : INICIO_MINUSCULAS) + nuevaPosicionEnAlfabeto;
-			// Convertir el código ASCII numérico a su representación como símbolo o letra y
-			// concatenar
-			cadenaRotada += Character.toString((char) nuevaPosicionAscii);
-		}
-		return cadenaRotada;
+	public static void descifrar() {
+		/*
+			Se deberá descifrar a partir del mismo desplazamiento, pero en un sentido negativo.
+		*/
+		// return rotar(archivo, -3);
 	}
 }
