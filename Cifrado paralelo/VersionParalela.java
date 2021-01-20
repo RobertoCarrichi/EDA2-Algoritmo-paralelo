@@ -13,7 +13,7 @@ public class VersionParalela {
         /*
 			Se indica el archivo a cifrar o descifrar.
         */
-		File file = new File("resultado-encriptado.txt"); 
+		File file = new File("short.txt"); 
 
 		/*
 			Se debe indicar si quiere cifrarse el archivo o descifrarse.
