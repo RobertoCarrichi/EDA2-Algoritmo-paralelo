@@ -17,8 +17,6 @@ public class CifradoDeArchivo{
 	File code; //archivo codificado
 	File decode;
 	
-	
-	
 	public void setRutaCompleta(int opc){
 		BufferedReader br;
 		System.out.print("\n Ingresa la ruta del archivo :\n > ");
