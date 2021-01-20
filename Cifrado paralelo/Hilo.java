@@ -50,10 +50,12 @@ public class Hilo extends Thread{
             this.textoEncriptado += (char) nuevaPosicionAscii;
         }
         int size = this.textoEncriptado.length();
-        while ( (int) this.textoEncriptado.charAt(size - 1) == 0 ){
-            this.textoEncriptado = this.textoEncriptado.substring(0, size - 1);
-            size--;
-        }
+        try {
+            while ( (int) this.textoEncriptado.charAt(size - 1) == 0 ){
+                this.textoEncriptado = this.textoEncriptado.substring(0, size - 1);
+                size--;
+            }
+        }catch(Exception e){}
         System.out.println("\n\tEl hilo "+this.nombre+" ha terminado!");
     }
 }

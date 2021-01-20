@@ -14,17 +14,18 @@ public class Cifrado {
 
 	File archivo;
 	int desplazamiento;
-	
+	int hilos;
 	/*
 	 *
 	 *
 	 *	
 	 */
-	public Cifrado (File archivo, int desplazamiento) throws FileNotFoundException, IOException {
+	public Cifrado (int hilos, File archivo, int desplazamiento) throws FileNotFoundException, IOException {
 		/*
 			Se inicializa el archivo con el que estará trabajando y el desplazamiento que existirá
 			para 
 		*/
+		this.hilos = hilos;
 		this.archivo = archivo;
 		this.desplazamiento = desplazamiento;
 	}
@@ -44,50 +45,30 @@ public class Cifrado {
 
 		FileReader fr = new FileReader(this.archivo);
 		BufferedReader buffer = new BufferedReader(fr);
-		
-		// Se determina el máximo de caracteres con el que trabajará cada hilo.
-		int tamanio = (int) ( (this.archivo.length() / 2) + 1);
 
-		char[] mitad1 = new char[tamanio];
-
-		/*
-			Se definen los hilos que trabajarán con la información del archivo.
-		*/
-		Hilo hilo1 = null;
-		Hilo hilo2 = null;
-
-		/*
-			SE DIVIDE EL ARCHIVO.
-		*/
-		buffer.read(mitad1,0, (int) ((this.archivo.length() / 2) + 1));
-
-		/*
-			Si la primera mitad ya alcanzado su capacidad de caracteres máxima, ya puede
-			comenzar a cifrarse la primera parte del archivo.
-		*/
-		hilo1 = new Hilo("A", mitad1, this.desplazamiento);
-		hilo1.start();
-
-		/*
-			Se realiza la lectura de datos del siguiente bloque de texto que reste en el buffer,
-			para esto se reinicializa el arreglo de caracteres.
-		*/
-		mitad1 = new char[tamanio];
-		buffer.read(mitad1, 0, (int) ( (this.archivo.length() / 2) + 1));
-		hilo2 = new Hilo("B", mitad1, this.desplazamiento);
-		hilo2.start();
-		
+		Hilo[] hilos = new Hilo[this.hilos];
+		int tamanio = (int) ( (this.archivo.length() / this.hilos) + 1);
+		char[] texto = new char[tamanio];
 		try {
-			hilo1.join();
-			hilo2.join();
+			for (int i = 0 ; i < hilos.length ; i ++ ) {
+				buffer.read(texto, 0, tamanio);
+				hilos[i] = new Hilo(""+(i+1), texto, this.desplazamiento);
+				hilos[i].start();
+				texto = new char[tamanio];
+			}
+
+
 			/*
 				Ya que ha terminado el encriptado del texto se procede a unir ambas mitades para
 				crear el archivo final.	
 			*/
 			File resultado = (desplazamiento > 0 ? new File("encriptado.txt") : new File("desencriptado.txt"));
 			PrintWriter writer = new PrintWriter(resultado);
-			writer.append(hilo1.textoEncriptado);
-			writer.append(hilo2.textoEncriptado);
+			
+			for (int i = 0 ; i < hilos.length ; i++ ) {
+				hilos[i].join();
+				writer.append(hilos[i].textoEncriptado);
+			}
 			writer.close();
 		} catch (InterruptedException e) {
 			e.printStackTrace();

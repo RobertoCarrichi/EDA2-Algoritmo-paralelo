@@ -13,7 +13,7 @@ public class VersionParalela {
         /*
 			Se indica el archivo a cifrar o descifrar.
         */
-		File file = new File("short.txt"); 
+		File file = new File("385900.txt"); 
 
 		/*
 			Se debe indicar si quiere cifrarse el archivo o descifrarse.
@@ -31,7 +31,7 @@ public class VersionParalela {
         /*
 			Numero de hilos
         */
-		int hilos = 2;
+		int hilos = 20;
 
 		/*
 			Se debe verificar si el archivo existe para que el proceso pueda continuar.
@@ -40,7 +40,7 @@ public class VersionParalela {
 			/*
 				Se genera la clase encargada de aplicar cualquier proceso en el archivo.
 			*/
-			Cifrado cifrado = (modo == 0 ? new Cifrado(file, desplazamiento) : new Cifrado(file, - desplazamiento)); 
+			Cifrado cifrado = (modo == 0 ? new Cifrado(hilos, file, desplazamiento) : new Cifrado(hilos, file, - desplazamiento)); 
 
 			/*
 				Son definidos los tiempos iniciales de ejecución.
