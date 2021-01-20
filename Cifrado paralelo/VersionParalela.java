@@ -21,13 +21,17 @@ public class VersionParalela {
 				0 -> Para CIFRAR
 				1 -> Para DESCIFRAR
 		*/
-		int modo = 1;
+		int modo = 0;
 
 		/*
 			Se debe indicar la cantidad de veces a desplazar el abecedario.
 		*/
         int desplazamiento = 3;
 
+        /*
+			Numero de hilos
+        */
+		int hilos = 2;
 
 		/*
 			Se debe verificar si el archivo existe para que el proceso pueda continuar.
@@ -36,7 +40,7 @@ public class VersionParalela {
 			/*
 				Se genera la clase encargada de aplicar cualquier proceso en el archivo.
 			*/
-			Cifrado cifrado = new Cifrado(file, desplazamiento);
+			Cifrado cifrado = (modo == 0 ? new Cifrado(file, desplazamiento) : new Cifrado(file, - desplazamiento)); 
 
 			/*
 				Son definidos los tiempos iniciales de ejecución.
@@ -54,7 +58,7 @@ public class VersionParalela {
 		    }else if ((modo == 1)  && (file.length() != 0) ) {
 				System.out.println("\n\tComienza el descifrado!");
 		    	inicio = System.currentTimeMillis();
-		    	cifrado.descifrar();
+		    	cifrado.cifrar();
 	        	fin = System.currentTimeMillis();
 				System.out.println("\n\tTermina el descifrado!");
 

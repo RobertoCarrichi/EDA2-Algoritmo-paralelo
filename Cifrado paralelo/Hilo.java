@@ -8,13 +8,13 @@ public class Hilo extends Thread{
 
     String nombre;
     int desplazamiento;
-    ArrayList<Character> texto;
+    char[] texto;
     String textoEncriptado = "";
 
     /*
      *
      */
-    public Hilo (String nombre, ArrayList<Character> texto, int desplazamiento) {
+    public Hilo (String nombre, char[] texto, int desplazamiento) {
         this.nombre = nombre;
         this.texto = texto;
         this.desplazamiento = desplazamiento;
@@ -33,7 +33,7 @@ public class Hilo extends Thread{
         final int INICIO_MINUSCULAS = 97;
         final int INICIO_MAYUSCULAS = 65;
 
-        System.out.println("\n\tEl hilo "+this.nombre+" ha comenzado!");
+        System.out.println("\n\tEl hilo " + this.nombre + " ha comenzado!");
         for (Character letra : this.texto) {
 
             if ( ! Character.isLetter(letra) ) {
@@ -48,6 +48,11 @@ public class Hilo extends Thread{
             }
             int nuevaPosicionAscii = (Character.isUpperCase(letra) ? INICIO_MAYUSCULAS : INICIO_MINUSCULAS) + nuevaPosicionEnAlfabeto;
             this.textoEncriptado += (char) nuevaPosicionAscii;
+        }
+        int size = this.textoEncriptado.length();
+        while ( (int) this.textoEncriptado.charAt(size - 1) == 0 ){
+            this.textoEncriptado = this.textoEncriptado.substring(0, size - 1);
+            size--;
         }
         System.out.println("\n\tEl hilo "+this.nombre+" ha terminado!");
     }
