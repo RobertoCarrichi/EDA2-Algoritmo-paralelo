@@ -1,14 +1,19 @@
 import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.io.FileNotFoundException;
 
 /*
  * Clase inicial encarga de ejecutar cualquier proceso en el archivo.
  */
 public class VersionParalela {
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException, FileNotFoundException{
         /*
 			Se indica el archivo a cifrar o descifrar.
         */
-		File file = new File("test.txt"); 
+		File file = new File("resultado-encriptado.txt"); 
 
 		/*
 			Se debe indicar si quiere cifrarse el archivo o descifrarse.
@@ -31,7 +36,7 @@ public class VersionParalela {
 			/*
 				Se genera la clase encargada de aplicar cualquier proceso en el archivo.
 			*/
-			Cifrado cifrado = new Cifrado(file);
+			Cifrado cifrado = new Cifrado(file, desplazamiento);
 
 			/*
 				Son definidos los tiempos iniciales de ejecución.
@@ -44,13 +49,15 @@ public class VersionParalela {
 		    	inicio = System.currentTimeMillis();
 		    	cifrado.cifrar();
 	        	fin = System.currentTimeMillis();
-				System.out.println("\tTermina el cifrado!");
+				System.out.println("\n\tTermina el cifrado!");
+
 		    }else if ((modo == 1)  && (file.length() != 0) ) {
 				System.out.println("\n\tComienza el descifrado!");
 		    	inicio = System.currentTimeMillis();
 		    	cifrado.descifrar();
 	        	fin = System.currentTimeMillis();
-				System.out.println("\tTermina el descifrado!");
+				System.out.println("\n\tTermina el descifrado!");
+
 		    }else{
 		    	if (file.length() == 0) {
 					System.out.println("El archivo que se encuentra vacio.");		    		
